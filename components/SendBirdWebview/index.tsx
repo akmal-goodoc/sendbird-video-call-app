@@ -10,7 +10,7 @@ const SendBirdView = () => {
   const [isCallStarted, setIsCallStarted] = useState<boolean>(false);
   const [calleeId, setCalleeId] = useState<string>(
     "sendbird_desk_agent_id_61a041f4-3689-4749-8707-7ae0bf99f8bb"
-  ); // Field for the user ID of the person to call
+  );
 
   // When the component mounts, initialize SendBird
   // useEffect(() => {
