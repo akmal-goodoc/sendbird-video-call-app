@@ -90,36 +90,36 @@ const SendBirdView = () => {
       console.log("ERROR IN CONNECTION >>>>", e);
     }
 
-    const localVideo = document.getElementById(
-      "local_video"
-    ) as HTMLVideoElement;
-    const remoteVideo = document.getElementById(
-      "remote_video"
-    ) as HTMLVideoElement;
+    // const localVideo = document.getElementById(
+    //   "local_video"
+    // ) as HTMLVideoElement;
+    // const remoteVideo = document.getElementById(
+    //   "remote_video"
+    // ) as HTMLVideoElement;
 
-    const callOption = {
-      isVideoCall: true,
-      callOption: {
-        localMediaView: localVideo,
-        remoteMediaView: remoteVideo,
-        audioEnabled: true,
-        videoEnabled: true,
-      },
-    };
+    // const callOption = {
+    //   isVideoCall: true,
+    //   callOption: {
+    //     localMediaView: localVideo,
+    //     remoteMediaView: remoteVideo,
+    //     audioEnabled: true,
+    //     videoEnabled: true,
+    //   },
+    // };
 
     try {
-      const dialParams = {
-        userId: calleeId, // ID of the person you are calling
-        isVideoCall: true,
-        callOption: {
-          localMediaView: localVideo,
-          remoteMediaView: remoteVideo,
-          audioEnabled: true,
-          videoEnabled: true,
-        },
-      };
+      //   const dialParams = {
+      //     userId: calleeId, // ID of the person you are calling
+      //     isVideoCall: true,
+      //     callOption: {
+      //       localMediaView: localVideo,
+      //       remoteMediaView: remoteVideo,
+      //       audioEnabled: true,
+      //       videoEnabled: true,
+      //     },
+      //   };
 
-      const newCall = SendBirdCall.createRoom({
+      SendBirdCall.createRoom({
         roomType: SendBirdCall.RoomType.SMALL_ROOM_FOR_VIDEO,
       })
         .then((room) => {
@@ -134,6 +134,7 @@ const SendBirdView = () => {
               // User has successfully entered room.
             })
             .catch((e) => {
+              console.log("error while entering room >>>", e);
               // Handle error
             });
         })
