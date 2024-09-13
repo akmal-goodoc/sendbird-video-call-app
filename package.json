@@ -9,16 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/css": "^11.13.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.0",
+    "next": "14.2.10",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.10"
+    "sendbird-calls": "^1.10.19"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.10"
-  }
+    "eslint-config-next": "14.2.10",
+    "typescript": "^5"
+  },
+  "packageManager": "yarn@4.4.0+sha512.91d93b445d9284e7ed52931369bc89a663414e5582d00eea45c67ddc459a2582919eece27c412d6ffd1bd0793ff35399381cb229326b961798ce4f4cc60ddfdb"
 }
