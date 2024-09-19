@@ -6,7 +6,7 @@ import * as styles from "./styles";
 
 const SendBirdView = () => {
   const [call, setCall] = useState<DirectCall | null>(null);
-  const [isCalling, setIsCalling] = useState<boolean>(false);
+  //   const [isCalling, setIsCalling] = useState<boolean>(false);
   const [isCallStarted, setIsCallStarted] = useState<boolean>(false);
   const [calleeId, setCalleeId] = useState<string>("");
   const [appId, setAppId] = useState<string>("");
@@ -35,31 +35,47 @@ const SendBirdView = () => {
         "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e"
       );
 
-      //   const localVideo = document.getElementById(
-      //     "local_video"
-      //   ) as HTMLVideoElement;
-      //   const remoteVideo = document.getElementById(
-      //     "remote_video"
-      //   ) as HTMLVideoElement;
+      const localVideo = document.getElementById(
+        "local_video"
+      ) as HTMLVideoElement;
+      const remoteVideo = document.getElementById(
+        "remote_video"
+      ) as HTMLVideoElement;
 
-      SendBirdCall.createRoom({
-        roomType: SendBirdCall.RoomType.SMALL_ROOM_FOR_VIDEO,
-      })
-        .then((room) => {
-          const enterParams = {
-            videoEnabled,
-            audioEnabled,
-          };
-          room
-            .enter(enterParams)
-            .then(() => {
-              setupCallEventHandlers(room);
-            })
-            .catch((e) => {
-              console.log("Error entering room", e);
-            });
-        })
-        .catch((error) => console.log("Error creating room", error));
+      const room = SendBirdCall.dial(
+        {
+          // roomType: SendBirdCall.RoomType.SMALL_ROOM_FOR_VIDEO,
+          userId: calleeId,
+          isVideoCall: true,
+          callOption: {
+            localMediaView: localVideo,
+            remoteMediaView: remoteVideo,
+            audioEnabled: true,
+            videoEnabled: true,
+          },
+          //   customItems?: CustomItems;
+          //   sendBirdChatOptions?: SendBirdChatOptions;
+          //   holdActiveCall?: boolean;
+          //   webhook?: Webhook;
+        },
+        () => {}
+      );
+      setupCallEventHandlers(room);
+      // .then((room) => {
+      //   const enterParams = {
+      //     videoEnabled,
+      //     audioEnabled,
+      //   };
+      //   room
+      //     .enter(enterParams)
+      //     .then(() => {
+      //       setupCallEventHandlers(room);
+      //     })
+      //     .catch((e) => {
+      //       console.log("Error entering room", e);
+      //     });
+      // })
+      // .catch((error) => console.log("Error creating room", error));
     } catch (error) {
       console.error("Error making call", error);
     }
@@ -68,7 +84,7 @@ const SendBirdView = () => {
   const endCall = () => {
     if (call) {
       call.end();
-      setIsCalling(false);
+      //   setIsCalling(false);
       setIsCallStarted(false);
     }
   };
@@ -76,9 +92,9 @@ const SendBirdView = () => {
   const toggleAudio = () => {
     if (call) {
       const newAudioState = !audioEnabled;
-      call.updateMedia({
-        audioEnabled: newAudioState,
-      });
+      //   call.updateMedia({
+      //     audioEnabled: newAudioState,
+      //   });
       setAudioEnabled(newAudioState);
     }
   };
@@ -86,16 +102,16 @@ const SendBirdView = () => {
   const toggleVideo = () => {
     if (call) {
       const newVideoState = !videoEnabled;
-      call.updateMedia({
-        videoEnabled: newVideoState,
-      });
+      //   call.updateMedia({
+      //     videoEnabled: newVideoState,
+      //   });
       setVideoEnabled(newVideoState);
     }
   };
 
   const switchCamera = () => {
     if (call) {
-      call.switchCamera();
+      //   call.switchCamera();
     }
   };
 
@@ -151,6 +167,9 @@ const SendBirdView = () => {
           </>
         )}
       </div>
+      <button css={styles.endButtonStyle} onClick={makeCall}>
+        Call
+      </button>
     </div>
   );
 };
