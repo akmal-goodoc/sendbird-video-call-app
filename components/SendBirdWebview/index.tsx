@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import * as SendBirdCall from "sendbird-calls";
 import { DirectCall } from "sendbird-calls";
 import * as styles from "./styles";
-import { cx } from "@emotion/css";
 
 const SendBirdView = () => {
   const [call, setCall] = useState<DirectCall | null>(null);
