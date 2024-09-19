@@ -28,8 +28,8 @@ const CallPage = () => {
     SendBirdCall.init(appId);
 
     // Authenticate user (You may want to generate a random user ID or prompt the user)
-    const userId = `user_${new Date().getTime()}`;
-    authenticateUser(userId)
+    // const userId = `user_${new Date().getTime()}`;
+    authenticateUser("123456")
       .then(() => {
         startCall(calleeId);
       })
@@ -38,6 +38,9 @@ const CallPage = () => {
         alert("Authentication failed. Returning to home page.");
         router.push("/");
       });
+
+    // const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
+    // console.log("Medica Access: >>>>", mediaAccess);
 
     // Cleanup on component unmount
     return () => {

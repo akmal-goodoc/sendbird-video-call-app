@@ -7,16 +7,14 @@ const HomePage = () => {
   const router = useRouter();
   const [appId, setAppId] = useState("6C5681E6-22C1-4139-82EB-DFF96E687335");
   const [calleeId, setCalleeId] = useState("");
-  const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
-  console.log("Medica Access: >>>>", mediaAccess);
 
   useEffect(() => {
     // Initialize SendBirdCall
     SendBirdCall.init(appId);
 
     // Authenticate user (You may want to generate a random user ID or prompt the user)
-    const userId = `user_${new Date().getTime()}`;
-    authenticateUser(userId);
+    const userId = `123456`;
+    authenticateUser(userId, "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e");
 
     SendBirdCall.addListener("call-status-listener", {
       onRinging: (call) => {
@@ -81,8 +79,8 @@ const HomePage = () => {
 };
 
 // Authentication function for users
-const authenticateUser = async (userId: string) => {
-  const authOption = { userId };
+const authenticateUser = async (userId: string, token: string) => {
+  const authOption = { userId, token };
   try {
     const user = await SendBirdCall.authenticate(authOption);
     await SendBirdCall.connectWebSocket();
