@@ -14,7 +14,7 @@ const HomePage = () => {
 
     // Authenticate user (You may want to generate a random user ID or prompt the user)
     const userId = `123456`;
-    authenticateUser(userId, "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e");
+    authenticateUser(userId);
 
     SendBirdCall.addListener("call-status-listener", {
       onRinging: (call) => {
@@ -79,8 +79,8 @@ const HomePage = () => {
 };
 
 // Authentication function for users
-const authenticateUser = async (userId: string, token: string) => {
-  const authOption = { userId, token };
+const authenticateUser = async (userId: string) => {
+  const authOption = { userId };
   try {
     const user = await SendBirdCall.authenticate(authOption);
     await SendBirdCall.connectWebSocket();
