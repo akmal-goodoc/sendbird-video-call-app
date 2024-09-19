@@ -9,7 +9,9 @@ const SendBirdView = () => {
   //   const [isCalling, setIsCalling] = useState<boolean>(false);
   const [isCallStarted, setIsCallStarted] = useState<boolean>(false);
   const [calleeId, setCalleeId] = useState<string>("");
-  const [appId, setAppId] = useState<string>("");
+  const [appId, setAppId] = useState<string>(
+    "6C5681E6-22C1-4139-82EB-DFF96E687335"
+  );
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
   const [rotateCamera, setRotateCamera] = useState<boolean>(true);
@@ -151,7 +153,7 @@ const SendBirdView = () => {
       <h1 css={styles.titleStyle}>Video Call with SendBird</h1>
       <input
         type="text"
-        placeholder="Enter SendBird App ID"
+        placeholder="Enter SendBird App ID default(6C5681E6-22C1-4139-82EB-DFF96E687335)"
         value={appId}
         onChange={(e) => setAppId(e.target.value)}
         css={styles.inputStyle}
