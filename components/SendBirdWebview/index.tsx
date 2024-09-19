@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as SendBirdCall from "sendbird-calls";
 import { DirectCall } from "sendbird-calls";
 import * as styles from "./styles";
+import { cx } from "@emotion/css";
 
 const SendBirdView = () => {
   const [call, setCall] = useState<DirectCall | null>(null);
@@ -12,6 +13,9 @@ const SendBirdView = () => {
   const [appId, setAppId] = useState<string>("");
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
+  const [rotateCamera, setRotateCamera] = useState<number>(0);
+  const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
+  console.log("Medica Access: >>>>", mediaAccess);
 
   const setupCallEventHandlers = (call: DirectCall) => {
     call.onEstablished = () => console.log("Call established");
@@ -92,9 +96,11 @@ const SendBirdView = () => {
   const toggleAudio = () => {
     if (call) {
       const newAudioState = !audioEnabled;
-      //   call.updateMedia({
-      //     audioEnabled: newAudioState,
-      //   });
+      if (newAudioState) {
+        call.unmuteMicrophone();
+      } else {
+        call.muteMicrophone();
+      }
       setAudioEnabled(newAudioState);
     }
   };
@@ -102,18 +108,48 @@ const SendBirdView = () => {
   const toggleVideo = () => {
     if (call) {
       const newVideoState = !videoEnabled;
-      //   call.updateMedia({
-      //     videoEnabled: newVideoState,
-      //   });
+      if (newVideoState) {
+        call.startVideo();
+      } else {
+        call.stopVideo();
+      }
       setVideoEnabled(newVideoState);
     }
   };
 
   const switchCamera = () => {
     if (call) {
-      //   call.switchCamera();
+      //   SendBirdCall.selectVideoInputDevice(
+      //     document.getElementById("local_video") as HTMLVideoElement
+      //   );
+      if (rotateCamera === 0) {
+        setRotateCamera(180);
+      } else {
+        setRotateCamera(0);
+      }
     }
   };
+
+  useEffect(() => {
+    SendBirdCall.addListener("123456", {
+      onRinging: (call) => {
+        call.accept({
+          callOption: {
+            localMediaView: document.getElementById(
+              "local_video"
+            ) as HTMLVideoElement,
+            remoteMediaView: document.getElementById(
+              "remote_video"
+            ) as HTMLVideoElement,
+            audioEnabled: true,
+            videoEnabled: true,
+          },
+          holdActiveCall: false,
+        });
+      },
+      //   onVideoInputDeviceChanged: (call) => {},
+    });
+  }, []);
 
   return (
     <div css={styles.containerStyle}>
@@ -145,7 +181,7 @@ const SendBirdView = () => {
           id="local_video"
           autoPlay
           playsInline
-          css={styles.localVideoStyle}
+          css={styles.localVideoStyle(rotateCamera)}
         ></video>
       </div>
 

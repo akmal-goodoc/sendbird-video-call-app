@@ -40,7 +40,7 @@ export const remoteVideoStyle = css`
   border-radius: 10px;
 `;
 
-export const localVideoStyle = css`
+export const localVideoStyle = (rotateCamera: number)=>css`
   position: absolute;
   top: 10px;
   left: 10px;
@@ -50,6 +50,7 @@ export const localVideoStyle = css`
   border-radius: 8px;
   z-index: 10;
   border: 2px solid white;
+  transform: ${rotateCamera === 180 ? 'rotateY(180deg)' : 'rotateY(0deg)'}; /* add this property for changing the ce */
 `;
 
 export const controlsContainerStyle = css`
