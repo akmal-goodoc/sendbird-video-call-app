@@ -16,6 +16,12 @@ const SendBirdView = () => {
   const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
   console.log("Medica Access: >>>>", mediaAccess);
 
+  useEffect(() => {
+    SendBirdCall.init(appId);
+
+    authenticateUser("123456", "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e");
+  }, []);
+
   const setupCallEventHandlers = (call: DirectCall) => {
     call.onEstablished = () => console.log("Call established");
     call.onConnected = () => {
@@ -31,13 +37,6 @@ const SendBirdView = () => {
 
   const makeCall = async () => {
     try {
-      await SendBirdCall.init(appId);
-
-      await authenticateUser(
-        "123456",
-        "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e"
-      );
-
       const localVideo = document.getElementById(
         "local_video"
       ) as HTMLVideoElement;
