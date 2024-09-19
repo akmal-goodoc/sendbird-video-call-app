@@ -12,7 +12,7 @@ const SendBirdView = () => {
   const [appId, setAppId] = useState<string>("");
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
-  const [rotateCamera, setRotateCamera] = useState<number>(0);
+  const [rotateCamera, setRotateCamera] = useState<boolean>(true);
   const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
   console.log("Medica Access: >>>>", mediaAccess);
 
@@ -121,11 +121,8 @@ const SendBirdView = () => {
       //   SendBirdCall.selectVideoInputDevice(
       //     document.getElementById("local_video") as HTMLVideoElement
       //   );
-      if (rotateCamera === 0) {
-        setRotateCamera(180);
-      } else {
-        setRotateCamera(0);
-      }
+
+      setRotateCamera(!rotateCamera);
     }
   };
 
