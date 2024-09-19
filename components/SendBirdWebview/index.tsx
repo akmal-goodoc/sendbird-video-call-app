@@ -153,7 +153,7 @@ const SendBirdView = () => {
       <h1 css={styles.titleStyle}>Video Call with SendBird</h1>
       <input
         type="text"
-        placeholder="Enter SendBird App ID default(6C5681E6-22C1-4139-82EB-DFF96E687335)"
+        placeholder="Enter SendBird App ID default(Akmals test sendbird app)"
         value={appId}
         onChange={(e) => setAppId(e.target.value)}
         css={styles.inputStyle}
