@@ -40,7 +40,7 @@ export const remoteVideoStyle = css`
   border-radius: 10px;
 `;
 
-export const localVideoStyle = (isFrontCamera: boolean)=>css`
+export const localVideoStyle = (isFrontCamera: number) => css`
   position: absolute;
   top: 10px;
   left: 10px;
@@ -50,7 +50,9 @@ export const localVideoStyle = (isFrontCamera: boolean)=>css`
   border-radius: 8px;
   z-index: 10;
   border: 2px solid white;
-  transform: ${isFrontCamera ? 'rotateY(180deg)' : 'rotateY(360deg)'}; /* add this property for changing the ce */
+  transform: ${isFrontCamera === 180
+    ? "rotateY(180deg)"
+    : "rotateY(360deg)"}; /* add this property for changing the ce */
 `;
 
 export const controlsContainerStyle = css`

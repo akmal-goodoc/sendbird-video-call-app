@@ -9,20 +9,12 @@ const SendBirdView = () => {
   //   const [isCalling, setIsCalling] = useState<boolean>(false);
   const [isCallStarted, setIsCallStarted] = useState<boolean>(false);
   const [calleeId, setCalleeId] = useState<string>("");
-  const [appId, setAppId] = useState<string>(
-    "6C5681E6-22C1-4139-82EB-DFF96E687335"
-  );
+  const [appId, setAppId] = useState<string>("");
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
-  const [rotateCamera, setRotateCamera] = useState<boolean>(true);
+  const [rotateCamera, setRotateCamera] = useState<number>(0);
   const mediaAccess = SendBirdCall.useMedia({ audio: true, video: true });
   console.log("Medica Access: >>>>", mediaAccess);
-
-  useEffect(() => {
-    SendBirdCall.init(appId);
-
-    authenticateUser("123456", "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e");
-  }, []);
 
   const setupCallEventHandlers = (call: DirectCall) => {
     call.onEstablished = () => console.log("Call established");
@@ -39,6 +31,13 @@ const SendBirdView = () => {
 
   const makeCall = async () => {
     try {
+      await SendBirdCall.init(appId);
+
+      await authenticateUser(
+        "123456",
+        "41666e42ed03ebab2b7b7c35c0cf5716ae55c41e"
+      );
+
       const localVideo = document.getElementById(
         "local_video"
       ) as HTMLVideoElement;
@@ -122,8 +121,11 @@ const SendBirdView = () => {
       //   SendBirdCall.selectVideoInputDevice(
       //     document.getElementById("local_video") as HTMLVideoElement
       //   );
-
-      setRotateCamera(!rotateCamera);
+      if (rotateCamera === 0) {
+        setRotateCamera(180);
+      } else {
+        setRotateCamera(0);
+      }
     }
   };
 
@@ -153,7 +155,7 @@ const SendBirdView = () => {
       <h1 css={styles.titleStyle}>Video Call with SendBird</h1>
       <input
         type="text"
-        placeholder="Enter SendBird App ID default(Akmals test sendbird app)"
+        placeholder="Enter SendBird App ID"
         value={appId}
         onChange={(e) => setAppId(e.target.value)}
         css={styles.inputStyle}

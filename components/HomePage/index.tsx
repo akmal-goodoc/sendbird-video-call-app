@@ -1,45 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import * as styles from "./styles";
-import * as SendBirdCall from "sendbird-calls";
 
 const HomePage = () => {
   const router = useRouter();
-  const [appId, setAppId] = useState("6C5681E6-22C1-4139-82EB-DFF96E687335");
+  const [appId, setAppId] = useState("");
   const [calleeId, setCalleeId] = useState("");
-
-  useEffect(() => {
-    // Initialize SendBirdCall
-    SendBirdCall.init(appId);
-
-    // Authenticate user (You may want to generate a random user ID or prompt the user)
-    const userId = `123456`;
-    authenticateUser(userId);
-
-    SendBirdCall.addListener("call-status-listener", {
-      onRinging: (call) => {
-        call.accept({
-          callOption: {
-            localMediaView: document.getElementById(
-              "local_video"
-            ) as HTMLVideoElement,
-            remoteMediaView: document.getElementById(
-              "remote_video"
-            ) as HTMLVideoElement,
-            audioEnabled: true,
-            videoEnabled: true,
-          },
-          holdActiveCall: false,
-        });
-      },
-      //   onVideoInputDeviceChanged: (call) => {},
-    });
-
-    // Cleanup on component unmount
-    return () => {
-      SendBirdCall.removeListener("call-status-listener");
-    };
-  }, []);
 
   const handleCall = () => {
     if (appId && calleeId) {
@@ -76,18 +42,6 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
-
-// Authentication function for users
-const authenticateUser = async (userId: string) => {
-  const authOption = { userId };
-  try {
-    const user = await SendBirdCall.authenticate(authOption);
-    await SendBirdCall.connectWebSocket();
-    console.log("User authenticated and connected:", user);
-  } catch (error) {
-    console.error("Error authenticating user:", error);
-  }
 };
 
 export default HomePage;
