@@ -13,7 +13,7 @@ export const remoteVideoStyle = css`
   object-fit: cover;
 `;
 
-export const localVideoStyle = css`
+export const localVideoStyle = (isFrontCamera: boolean)=>css`
   position: absolute;
   width: 120px;
   height: 160px;
@@ -21,6 +21,7 @@ export const localVideoStyle = css`
   right: 20px;
   border: 2px solid white;
   object-fit: cover;
+  transform: ${isFrontCamera ? 'rotateY(180deg)' : 'rotateY(360deg)'}
 `;
 
 export const controlsContainerStyle = css`

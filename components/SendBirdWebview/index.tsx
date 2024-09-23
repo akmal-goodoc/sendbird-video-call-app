@@ -129,26 +129,26 @@ const SendBirdView = () => {
     }
   };
 
-  useEffect(() => {
-    SendBirdCall.addListener("123456", {
-      onRinging: (call) => {
-        call.accept({
-          callOption: {
-            localMediaView: document.getElementById(
-              "local_video"
-            ) as HTMLVideoElement,
-            remoteMediaView: document.getElementById(
-              "remote_video"
-            ) as HTMLVideoElement,
-            audioEnabled: true,
-            videoEnabled: true,
-          },
-          holdActiveCall: false,
-        });
-      },
-      //   onVideoInputDeviceChanged: (call) => {},
-    });
-  }, []);
+  //   useEffect(() => {
+  //     SendBirdCall.addListener("123456", {
+  //       onRinging: (call) => {
+  //         call.accept({
+  //           callOption: {
+  //             localMediaView: document.getElementById(
+  //               "local_video"
+  //             ) as HTMLVideoElement,
+  //             remoteMediaView: document.getElementById(
+  //               "remote_video"
+  //             ) as HTMLVideoElement,
+  //             audioEnabled: true,
+  //             videoEnabled: true,
+  //           },
+  //           holdActiveCall: false,
+  //         });
+  //       },
+  //       //   onVideoInputDeviceChanged: (call) => {},
+  //     });
+  //   }, []);
 
   return (
     <div css={styles.containerStyle}>

@@ -12,12 +12,15 @@ const CallPage = () => {
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
   const [isVideoEnabled, setIsVideoEnabled] = useState(true);
   const [isFrontCamera, setIsFrontCamera] = useState(true);
+  const [isCallStarted, setIsCallStarted] = useState(false);
 
   useEffect(() => {
     // Get appId and calleeId from session storage
     const appId = sessionStorage.getItem("sendbird_app_id");
     const calleeId = sessionStorage.getItem("sendbird_callee_id");
-
+    const callerId = sessionStorage.getItem("sendbird_caller_id");
+    console.log("appId: >>>>", appId);
+    console.log("calleeId: >>>>", calleeId);
     if (!appId || !calleeId) {
       alert("Missing Application ID or Callee ID. Returning to home page.");
       router.push("/");
@@ -29,7 +32,7 @@ const CallPage = () => {
 
     // Authenticate user (You may want to generate a random user ID or prompt the user)
     // const userId = `user_${new Date().getTime()}`;
-    authenticateUser("123456")
+    authenticateUser(callerId || "111111")
       .then(() => {
         startCall(calleeId);
       })
@@ -51,9 +54,24 @@ const CallPage = () => {
   }, []);
 
   const authenticateUser = async (userId: string) => {
-    const authOption = { userId };
-    await SendBirdCall.authenticate(authOption);
-    await SendBirdCall.connectWebSocket();
+    if (!isCallStarted) {
+      console.log("setIsCallStarted >>>>", isCallStarted);
+      setIsCallStarted(true);
+      const authOption = {
+        userId,
+        // accessToken: "7fbdfd30f719766d3838973cf58f5967f461b00f",
+      };
+      const user = await SendBirdCall.authenticate(authOption).catch(
+        (error) => {
+          console.log("ERROR IN AUTHENTICATE >>>", error);
+        }
+      );
+      console.log("USER >>>>", user);
+      const socket = await SendBirdCall.connectWebSocket().catch((error) => {
+        console.log("ERROR IN CONNECTING WEB SOCKET >>>>", error);
+      });
+      console.log("SOCKET >>>>", socket);
+    }
   };
 
   const startCall = (calleeId: string) => {
@@ -142,7 +160,7 @@ const CallPage = () => {
         autoPlay
         playsInline
         muted
-        className={styles.localVideoStyle}
+        className={styles.localVideoStyle(isFrontCamera)}
       ></video>
       <div className={styles.controlsContainerStyle}>
         <button onClick={toggleAudio} className={styles.controlButtonStyle}>
