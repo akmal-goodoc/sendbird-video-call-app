@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as SendBirdCall from "sendbird-calls";
 import { DirectCall } from "sendbird-calls";
 import * as styles from "./styles";
